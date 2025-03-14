@@ -308,13 +308,13 @@ ROMX $78
 	"Tileset Data 8"
 ROMX $7b
 	"Battle Tower Text"
-ROMX $7c
+ROMX $75
 	"Battle Tower Trainer Data"
-ROMX $7d
+ROMX $76
 	"Mobile News Data"
-ROMX $7e
+ROMX $79
 	"Crystal Events"
-ROMX $7f
+ROMX $7a
 	org $7de0
 	"Stadium 2 Checksums"
 WRAM0
