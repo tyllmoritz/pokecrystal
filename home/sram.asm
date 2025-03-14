@@ -28,10 +28,10 @@ endc
 	ld [MBC3LatchClock], a
 ; enable sram/clock write
 	ld a, SRAM_ENABLE
-	ld [MBC3SRamEnable], a
+	ld [MBC5SRamEnable], a
 ; select sram bank
 	pop af
-	ld [MBC3SRamBank], a
+	ld [MBC5SRamBank], a
 	ret
 
 CloseSRAM::
@@ -40,6 +40,6 @@ CloseSRAM::
 ; reset clock latch for next time
 	ld [MBC3LatchClock], a
 ; disable sram/clock write
-	ld [MBC3SRamEnable], a
+	ld [MBC5SRamEnable], a
 	pop af
 	ret

@@ -144,7 +144,7 @@ Init::
 
 	xor a ; SRAM_DISABLE
 	ld [MBC3LatchClock], a
-	ld [MBC3SRamEnable], a
+	ld [MBC5SRamEnable], a
 
 	ldh a, [hCGB]
 	and a

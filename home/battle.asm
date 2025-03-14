@@ -163,7 +163,7 @@ FarCopyRadioText::
 	ld d, a
 	ld a, [hli]
 	ldh [hROMBank], a
-	ld [MBC3RomBank], a
+	ld [MBC5RomBank], a
 	ld a, e
 	ld l, a
 	ld a, d
@@ -173,7 +173,7 @@ FarCopyRadioText::
 	call CopyBytes
 	pop af
 	ldh [hROMBank], a
-	ld [MBC3RomBank], a
+	ld [MBC5RomBank], a
 	ret
 
 MobileTextBorder::

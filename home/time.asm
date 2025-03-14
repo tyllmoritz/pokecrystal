@@ -31,12 +31,12 @@ GetClock::
 
 ; enable clock r/w
 	ld a, SRAM_ENABLE
-	ld [MBC3SRamEnable], a
+	ld [MBC5SRamEnable], a
 
 ; clock data is 'backwards' in hram
 
 	call LatchClock
-	ld hl, MBC3SRamBank
+	ld hl, MBC5SRamBank
 	ld de, MBC3RTC
 
 	ld [hl], RTC_S
@@ -214,13 +214,13 @@ SetClock::
 
 ; enable clock r/w
 	ld a, SRAM_ENABLE
-	ld [MBC3SRamEnable], a
+	ld [MBC5SRamEnable], a
 
 ; set clock data
 ; stored 'backwards' in hram
 
 	call LatchClock
-	ld hl, MBC3SRamBank
+	ld hl, MBC5SRamBank
 	ld de, MBC3RTC
 
 ; seems to be a halt check that got partially commented out

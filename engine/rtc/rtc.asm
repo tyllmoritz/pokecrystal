@@ -1,9 +1,9 @@
 StopRTC: ; unreferenced
 	ld a, SRAM_ENABLE
-	ld [MBC3SRamEnable], a
+	ld [MBC5SRamEnable], a
 	call LatchClock
 	ld a, RTC_DH
-	ld [MBC3SRamBank], a
+	ld [MBC5SRamBank], a
 	ld a, [MBC3RTC]
 	set RTC_DH_HALT, a
 	ld [MBC3RTC], a
@@ -12,10 +12,10 @@ StopRTC: ; unreferenced
 
 StartRTC:
 	ld a, SRAM_ENABLE
-	ld [MBC3SRamEnable], a
+	ld [MBC5SRamEnable], a
 	call LatchClock
 	ld a, RTC_DH
-	ld [MBC3SRamBank], a
+	ld [MBC5SRamBank], a
 	ld a, [MBC3RTC]
 	res RTC_DH_HALT, a
 	ld [MBC3RTC], a
@@ -75,14 +75,14 @@ StageRTCTimeForSave:
 
 SaveRTC:
 	ld a, SRAM_ENABLE
-	ld [MBC3SRamEnable], a
+	ld [MBC5SRamEnable], a
 	call LatchClock
 	ld hl, MBC3RTC
 	ld a, RTC_DH
-	ld [MBC3SRamBank], a
+	ld [MBC5SRamBank], a
 	res RTC_DH_OVERFLOW, [hl]
 	ld a, BANK(sRTCStatusFlags)
-	ld [MBC3SRamBank], a
+	ld [MBC5SRamBank], a
 	xor a
 	ld [sRTCStatusFlags], a
 	call CloseSRAM
