@@ -22,6 +22,7 @@ LatchClock::
 UpdateTime::
 	call GetClock
 	call FixDays
+	farcall ChangeTimeInPokegear
 	call FixTime
 	farcall GetTimeOfDay
 	ret

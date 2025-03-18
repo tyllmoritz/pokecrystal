@@ -463,7 +463,7 @@ PokegearClock_Joypad:
 	call .UpdateClock
 	ld hl, hJoyLast
 	ld a, [hl]
-	and A_BUTTON | B_BUTTON | START | SELECT
+	and B_BUTTON | START | SELECT
 	jr nz, .quit
 	ld a, [hl]
 	and D_RIGHT
@@ -2921,3 +2921,89 @@ EntireFlyMap: ; unreferenced
 	xor a
 	ldh [hBGMapMode], a
 	ret
+
+ChangeTimeInPokegear::
+; are we in Pokegear?
+ld a,[wScriptFlags]
+cp a,4
+ret nz
+ld a,[wSpriteAnimAddrBackup + 1]
+cp a,$c3
+ret nz
+ld a,[wJumptableIndex]
+cp a,1
+ret nz
+; is A Button pressed?
+ld b,1
+ldh a,[hJoypadDown]
+and a,A_BUTTON
+jr z,.checkUpDownButtons
+ld b,8
+; change Time with UP/DOWN Buttons
+.checkUpDownButtons:
+ldh a,[hJoypadDown]
+and a,D_UP
+jp nz,increaseTime
+ldh a,[hJoypadDown]
+and a,D_DOWN
+jp nz,decreaseTime
+ret
+
+
+increaseTime:
+ld a,[wStartMinute]
+add b               ; increase Minutes
+cp a,60
+jr nc,.nextHour
+ld [wStartMinute],a
+ret
+.nextHour:
+xor a               ; set to 00 Minutes
+ld [wStartMinute],a
+ld a,[wStartHour]
+add a,01            ; at the next Hour
+cp a,24
+jr nc,.nextDay
+ld [wStartHour],a
+ret
+.nextDay:
+xor a               ; set to 00 Hours
+ld [wStartHour],a
+ld a,[wStartDay]
+add a,01            ; at the next Day
+cp a,7
+jr nc,.nextWeek
+ld [wStartDay],a
+ret
+.nextWeek:
+xor a               ; set to first day of Week
+ld [wStartDay],a
+ret
+
+
+decreaseTime:
+ld a,[wStartMinute]
+sub b               ; decrease Minutes
+jr c,.previousHour
+ld [wStartMinute],a
+ret
+.previousHour:
+ld a,59             ; set to 59 Minutes
+ld [wStartMinute],a
+ld a,[wStartHour]
+sub a,1             ; at the previous Hour
+jr c,.previousDay
+ld [wStartHour],a
+ret
+.previousDay:
+ld a,23             ; set to 23 Hours
+ld [wStartHour],a
+ld a,[wStartDay]
+sub a,1             ; at the previous Day
+jr c,.previousWeek
+ld [wStartDay],a
+ret
+.previousWeek:
+ld a,6              ; set to last Day of Week
+ld [wStartDay],a
+ret
